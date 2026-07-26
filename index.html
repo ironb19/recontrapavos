@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Recontra Pavos, canal de streaming casi serio.">
+  <title>Recontra Pavos | Canal de streaming (casi serio)</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Fira+Code:wght@400;500;600;700&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --crema: #F0EFD6;
+      --azul: #80AEB4;
+      --rojo: #BF4341;
+      --gris: #4B4B4B;
+      --negro: #000000;
+      --blanco: #FFFDF7;
+      --rosa: #F3BEDA;
+      --amarillo: #F9AD45;
+      --borde: 3px solid var(--negro);
+      --sombra: 8px 8px 0 var(--negro);
+      --max: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: 88px;
+    }
+
+    body {
+      margin: 0;
+      overflow-x: hidden;
+      background: var(--crema);
+      color: var(--negro);
+      font-family: "Fira Code", monospace;
+    }
+
+    img { display: block; max-width: 100%; }
+    a { color: inherit; text-decoration: none; }
+    button, a { font: inherit; }
+
+    .container {
+      width: min(calc(100% - 36px), var(--max));
+      margin-inline: auto;
+    }
+
+    .site-header {
+      position: sticky;
+      inset: 0 0 auto;
+      z-index: 100;
+      background: rgba(240, 239, 214, .95);
+      border-bottom: var(--borde);
+      backdrop-filter: blur(10px);
+    }
+
+    .nav {
+      min-height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .nav-brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: "Bowlby One SC", sans-serif;
+      line-height: .94;
+    }
+
+    .nav-brand img {
+      width: 58px;
+      height: 52px;
+      object-fit: contain;
+      transform: rotate(-4deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 23px;
+      font-size: .88rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .nav-links a {
+      position: relative;
+      padding: 8px 0;
+    }
+
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 100%;
+      bottom: 0;
+      height: 4px;
+      background: var(--rojo);
+      transition: right .2s ease;
+    }
+
+    .nav-links a:hover::after,
+    .nav-links a:focus-visible::after { right: 0; }
+
+    .menu-button {
+      display: none;
+      width: 46px;
+      height: 42px;
+      cursor: pointer;
+      border: var(--borde);
+      background: var(--azul);
+      box-shadow: 4px 4px 0 var(--negro);
+      font-size: 1.3rem;
+    }
+
+    .hero {
+      position: relative;
+      min-height: calc(100vh - 76px);
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      isolation: isolate;
+      border-bottom: var(--borde);
+      background:
+        linear-gradient(rgba(240,239,214,.84), rgba(226,211,165,.90)),
+        url("assets/patron.svg");
+      background-size: auto, 260px 220px;
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: -10%;
+      right: -10%;
+      bottom: -90px;
+      height: 180px;
+      background: var(--rojo);
+      border-top: var(--borde);
+      transform: rotate(-2deg);
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.08fr .92fr;
+      align-items: center;
+      gap: 66px;
+      padding: 65px 0 135px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 9px 14px;
+      background: var(--azul);
+      border: var(--borde);
+      box-shadow: 5px 5px 0 var(--negro);
+      transform: rotate(-1deg);
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .eyebrow-dot {
+      width: 12px;
+      height: 12px;
+      border: 2px solid var(--negro);
+      border-radius: 50%;
+      background: var(--rojo);
+      animation: pulse 1.2s infinite;
+    }
+
+    @keyframes pulse {
+      50% { transform: scale(1.24); opacity: .65; }
+    }
+
+    .hero-copy {
+      max-width: 690px;
+      margin: 28px 0 0;
+      font-size: clamp(1rem, 1.55vw, 1.2rem);
+      line-height: 1.72;
+      font-weight: 600;
+    }
+
+    .hero-note {
+      margin: 22px 0 4px;
+      font-family: "Permanent Marker", cursive;
+      font-size: clamp(1.35rem, 2.7vw, 2.15rem);
+      transform: rotate(-2deg);
+    }
+
+    .hero-logo {
+      width: min(650px, 100%);
+      margin: -25px 0 -35px;
+      filter: drop-shadow(6px 7px 0 rgba(0,0,0,.18));
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 26px;
+    }
+
+    .button {
+      display: inline-flex;
+      min-height: 52px;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      padding: 12px 21px;
+      border: var(--borde);
+      box-shadow: 6px 6px 0 var(--negro);
+      font-weight: 900;
+      text-transform: uppercase;
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .button:hover,
+    .button:focus-visible {
+      transform: translate(3px, 3px);
+      box-shadow: 3px 3px 0 var(--negro);
+    }
+
+    .button-red { background: var(--rojo); color: var(--blanco); }
+    .button-blue { background: var(--azul); }
+    .button-cream { background: var(--blanco); }
+    .button-black { background: var(--negro); color: var(--blanco); }
+
+    .upcoming-wrap { position: relative; }
+
+    .upcoming-card {
+      position: relative;
+      min-height: 535px;
+      padding: 30px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      border: var(--borde);
+      border-radius: 42px 23px 50px 27px;
+      background: #E83B6C;
+      box-shadow: 12px 12px 0 var(--negro);
+      transform: rotate(1.8deg);
+    }
+
+    .upcoming-card::before,
+    .upcoming-card::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      opacity: .25;
+      background: var(--rosa);
+    }
+
+    .upcoming-card::before {
+      width: 280px;
+      height: 280px;
+      top: -100px;
+      right: -70px;
+    }
+
+    .upcoming-card::after {
+      width: 230px;
+      height: 230px;
+      left: -90px;
+      bottom: 30px;
+    }
+
+    .upcoming-card > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .program-tag {
+      display: inline-block;
+      width: fit-content;
+      padding: 7px 11px;
+      border: 2px solid var(--negro);
+      background: var(--blanco);
+      color: var(--negro);
+      box-shadow: 4px 4px 0 var(--negro);
+      font-weight: 900;
+      transform: rotate(-2deg);
+    }
+
+    .integilentes-lockup {
+      position: relative;
+      height: 335px;
+      display: grid;
+      place-items: center;
+      margin-top: 5px;
+    }
+
+    .integilentes-brain {
+      position: absolute;
+      width: 340px;
+      max-height: 340px;
+      object-fit: contain;
+      filter: drop-shadow(7px 8px 0 rgba(0,0,0,.18));
+      animation: floaty 3.4s ease-in-out infinite;
+    }
+
+    .integilentes-text {
+      position: relative;
+      z-index: 2;
+      width: 330px;
+      filter: drop-shadow(6px 7px 0 rgba(0,0,0,.38));
+      transform: rotate(-2deg);
+    }
+
+    @keyframes floaty {
+      50% { transform: translateY(-10px) rotate(-1.5deg); }
+    }
+
+    .schedule-link {
+      display: block;
+      padding: 15px 18px;
+      border: var(--borde);
+      border-radius: 999px;
+      background: var(--rojo);
+      color: var(--blanco);
+      box-shadow: 7px 7px 0 var(--negro);
+      text-align: center;
+      font-family: "Bowlby One SC", sans-serif;
+      font-size: clamp(.95rem, 2vw, 1.25rem);
+      transition: transform .15s ease, box-shadow .15s ease;
+    }
+
+    .schedule-link:hover,
+    .schedule-link:focus-visible {
+      transform: translate(3px, 3px);
+      box-shadow: 4px 4px 0 var(--negro);
+    }
+
+    .countdown {
+      min-height: 45px;
+      margin-top: 17px;
+      padding: 8px 11px;
+      text-align: center;
+      font-size: .83rem;
+      line-height: 1.45;
+      font-weight: 800;
+    }
+
+    .live-now {
+      display: inline-block;
+      padding: 6px 9px;
+      border: 2px solid var(--negro);
+      background: var(--amarillo);
+      color: var(--negro);
+      box-shadow: 3px 3px 0 var(--negro);
+    }
+
+    .decor {
+      position: absolute;
+      z-index: 4;
+      pointer-events: none;
+    }
+
+    .decor-estallido { width: 118px; left: -58px; top: 48px; transform: rotate(-12deg); }
+    .decor-rayo { width: 85px; right: -44px; bottom: 82px; transform: rotate(7deg); }
+    .decor-espiral { width: 92px; right: 26px; top: -46px; }
+
+    section { border-bottom: var(--borde); }
+    .section { padding: 90px 0; }
+
+    .section-heading {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 25px;
+      margin-bottom: 38px;
+    }
+
+    .kicker {
+      margin: 0 0 8px;
+      color: var(--rojo);
+      font-weight: 900;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3 {
+      margin: 0;
+      font-family: "Bowlby One SC", sans-serif;
+      line-height: 1.02;
+    }
+
+    h2 {
+      max-width: 900px;
+      font-size: clamp(2.25rem, 5vw, 4.55rem);
+    }
+
+    .scribble {
+      max-width: 350px;
+      margin: 0;
+      font-family: "Permanent Marker", cursive;
+      font-size: clamp(1.15rem, 2.2vw, 1.55rem);
+      line-height: 1.35;
+      transform: rotate(-2deg);
+    }
+
+    .programs { background: var(--blanco); }
+
+    .program-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 36px;
+      align-items: stretch;
+    }
+
+    .program-card {
+      position: relative;
+      min-width: 0;
+      min-height: 650px;
+      padding: 34px 36px 30px;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      border: var(--borde);
+      box-shadow: var(--sombra);
+      transition: transform .2s ease;
+    }
+
+    .program-card:hover {
+      transform: translateY(-8px) rotate(-.5deg);
+    }
+
+    .program-card.integilentes {
+      background: #DF3564;
+      color: var(--blanco);
+    }
+
+    .program-card.virgeeks {
+      background:
+        linear-gradient(rgba(128,174,180,.92), rgba(128,174,180,.92)),
+        url("assets/patron.svg");
+      background-size: auto, 210px 180px;
+    }
+
+    .program-number {
+      flex: 0 0 auto;
+      width: 55px;
+      height: 55px;
+      display: grid;
+      place-items: center;
+      border: var(--borde);
+      border-radius: 50%;
+      background: var(--blanco);
+      color: var(--negro);
+      box-shadow: 4px 4px 0 var(--negro);
+      font-weight: 900;
+    }
+
+    .program-content {
+      flex: 1;
+      min-height: 0;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .program-brand {
+      display: block;
+      width: min(500px, 84%);
+      height: auto;
+      max-height: 245px;
+      margin: 58px auto 52px;
+      object-fit: contain;
+      filter: drop-shadow(8px 10px 0 rgba(0,0,0,.22));
+    }
+
+    .program-card p {
+      width: 100%;
+      max-width: 92%;
+      margin: 0 0 28px;
+      font-size: 1.04rem;
+      line-height: 1.72;
+      font-weight: 700;
+    }
+
+    .program-card .program-tag {
+      margin-top: auto;
+      align-self: flex-start;
+    }
+
+    .virgeeks-lockup {
+      position: relative;
+      width: 100%;
+      height: 310px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 24px 0 24px;
+      overflow: hidden;
+    }
+
+    .virgeeks-title {
+      display: block;
+      max-width: 90%;
+      margin: 0 auto;
+      color: var(--crema);
+      text-align: center;
+      font-size: clamp(2.6rem, 4vw, 4.2rem);
+      line-height: .95;
+      -webkit-text-stroke: 2px var(--negro);
+      text-shadow: 5px 5px 0 var(--rojo);
+      opacity: .95;
+    }
+
+    .soon-sign {
+      display: inline-block;
+      box-sizing: border-box;
+      max-width: calc(100% - 54px);
+      padding: 20px 24px;
+      border: 5px solid var(--blanco);
+      outline: 4px solid var(--rojo);
+      background: var(--rojo);
+      color: var(--blanco);
+      box-shadow: 10px 10px 0 var(--negro);
+      text-align: center;
+      white-space: nowrap;
+      overflow: hidden;
+      font-family: "Bowlby One SC", sans-serif;
+      font-size: clamp(1.45rem, 2.55vw, 2.8rem);
+      line-height: 1;
+      letter-spacing: .02em;
+    }
+
+    .soon-sign.overlap {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      z-index: 3;
+      margin: 0;
+      transform: translate(-50%, -50%) rotate(-5deg);
+    }
+
+    @media (max-width: 920px) {
+      .program-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .program-card {
+        min-height: 620px;
+      }
+
+      .program-brand {
+        width: min(490px, 82%);
+      }
+    }
+
+    @media (max-width: 560px) {
+      .program-card {
+        min-height: 580px;
+        padding: 28px 24px 26px;
+      }
+
+      .program-brand {
+        width: 92%;
+        margin: 52px auto 44px;
+      }
+
+      .virgeeks-lockup {
+        height: 270px;
+      }
+
+      .soon-sign {
+        max-width: calc(100% - 26px);
+        padding: 17px 15px;
+        font-size: clamp(1.2rem, 6.3vw, 1.75rem);
+      }
+    }
+
+    .live-section {
+      position: relative;
+      overflow: hidden;
+      background: var(--gris);
+      color: var(--blanco);
+    }
+
+    .live-layout {
+      display: grid;
+      grid-template-columns: .78fr 1.22fr;
+      align-items: center;
+      gap: 55px;
+    }
+
+    .general-time {
+      padding: 34px;
+      border: var(--borde);
+      background: var(--crema);
+      color: var(--negro);
+      box-shadow: 12px 12px 0 var(--negro);
+      transform: rotate(-2deg);
+    }
+
+    .general-time strong {
+      display: block;
+      color: var(--rojo);
+      font-family: "Bowlby One SC", sans-serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      line-height: .95;
+      -webkit-text-stroke: 2px var(--negro);
+    }
+
+    .general-days {
+      margin: 16px 0 0;
+      font-family: "Permanent Marker", cursive;
+      font-size: clamp(1.25rem, 3vw, 2rem);
+      line-height: 1.2;
+      transform: rotate(-1deg);
+    }
+
+    .live-times {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 15px;
+      margin-top: 29px;
+    }
+
+    .live-time {
+      padding: 18px 12px;
+      border: 2px solid var(--negro);
+      background: var(--crema);
+      color: var(--negro);
+      box-shadow: 5px 5px 0 var(--negro);
+      text-align: center;
+    }
+
+    .live-time b {
+      display: block;
+      color: var(--rojo);
+      font-family: "Bowlby One SC", sans-serif;
+      font-size: 1.25rem;
+    }
+
+    .live-time span {
+      display: block;
+      margin-top: 4px;
+      font-size: 1.15rem;
+      font-weight: 900;
+    }
+
+    .merch {
+      position: relative;
+      overflow: hidden;
+      background: var(--crema);
+    }
+
+    .merch-stage {
+      position: relative;
+      min-height: 470px;
+      display: grid;
+      place-items: center;
+      padding: 55px;
+      overflow: hidden;
+      border: var(--borde);
+      background:
+        linear-gradient(rgba(128,174,180,.88), rgba(128,174,180,.88)),
+        url("assets/patron.svg");
+      background-size: auto, 220px 190px;
+      box-shadow: 12px 12px 0 var(--negro);
+    }
+
+    .merch-coming {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+    }
+
+    .merch-coming h3 {
+      color: var(--rojo);
+      font-size: clamp(3rem, 9vw, 7.5rem);
+      -webkit-text-stroke: 3px var(--negro);
+      text-shadow: 9px 9px 0 var(--negro);
+      transform: rotate(-2deg);
+    }
+
+    .merch-coming p {
+      max-width: 670px;
+      margin: 34px auto 0;
+      padding: 10px 14px;
+      border: 2px solid var(--negro);
+      background: var(--blanco);
+      box-shadow: 5px 5px 0 var(--negro);
+      font-family: "Permanent Marker", cursive;
+      font-size: clamp(1.25rem, 2.6vw, 1.8rem);
+    }
+
+    .merch-object {
+      position: absolute;
+      z-index: 1;
+      width: 110px;
+      height: 140px;
+      border: var(--borde);
+      background: var(--blanco);
+      box-shadow: 7px 7px 0 var(--negro);
+      opacity: .78;
+    }
+
+    .merch-object.one { left: 7%; top: 17%; transform: rotate(-12deg); }
+    .merch-object.two { right: 7%; top: 17%; transform: rotate(11deg); border-radius: 50% 50% 42% 42%; }
+    .merch-object.three { right: 18%; bottom: 9%; width: 145px; height: 82px; transform: rotate(-7deg); }
+    .merch-object.four { left: 18%; bottom: 9%; width: 145px; height: 82px; transform: rotate(8deg); }
+
+    .about { background: var(--rojo); }
+
+    .about-layout {
+      display: grid;
+      grid-template-columns: .88fr 1.12fr;
+      align-items: center;
+      gap: 64px;
+    }
+
+    .about-visual {
+      min-height: 415px;
+      display: grid;
+      place-items: center;
+      position: relative;
+      overflow: hidden;
+      border: var(--borde);
+      border-radius: 48% 43% 50% 44%;
+      background: var(--crema);
+      box-shadow: 12px 12px 0 var(--negro);
+      transform: rotate(-3deg);
+    }
+
+    .about-visual img {
+      width: 440px;
+      max-width: 95%;
+      filter: drop-shadow(7px 8px 0 rgba(0,0,0,.15));
+    }
+
+    .about-copy {
+      color: var(--blanco);
+      font-size: 1.06rem;
+      line-height: 1.8;
+      font-weight: 600;
+    }
+
+    .about-copy h2 { margin-bottom: 22px; }
+
+    .about-values {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin: 26px 0;
+    }
+
+    .about-values span {
+      padding: 9px 12px;
+      border: 2px solid var(--negro);
+      background: var(--crema);
+      color: var(--negro);
+      box-shadow: 4px 4px 0 var(--negro);
+      font-weight: 900;
+    }
+
+    .community {
+      text-align: center;
+      background:
+        linear-gradient(rgba(128,174,180,.91), rgba(128,174,180,.91)),
+        url("assets/patron.svg");
+      background-size: auto, 260px 220px;
+    }
+
+    .community-box,
+    .sponsor-box {
+      position: relative;
+      overflow: hidden;
+      padding: clamp(38px, 7vw, 72px);
+      border: var(--borde);
+      background: var(--blanco);
+      box-shadow: 12px 12px 0 var(--negro);
+    }
+
+    .community-box h2,
+    .sponsor-box h2 { margin-inline: auto; }
+
+    .community-box > p,
+    .sponsor-box > p {
+      max-width: 760px;
+      margin: 20px auto 0;
+      line-height: 1.75;
+      font-weight: 650;
+    }
+
+    .community .actions { justify-content: center; }
+
+    .brands {
+      background: var(--blanco);
+    }
+
+    .sponsor-box {
+      max-width: 980px;
+      margin-inline: auto;
+      background: var(--crema);
+      text-align: center;
+    }
+
+    .sponsor-label {
+      display: inline-block;
+      margin-bottom: 20px;
+      padding: 9px 14px;
+      border: var(--borde);
+      background: var(--rojo);
+      color: var(--blanco);
+      box-shadow: 5px 5px 0 var(--negro);
+      font-weight: 900;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      transform: rotate(-1deg);
+    }
+
+    .email-link {
+      word-break: break-word;
+      text-transform: none;
+    }
+
+    footer {
+      padding: 34px 0;
+      background: var(--negro);
+      color: var(--blanco);
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-title {
+      font-family: "Bowlby One SC", sans-serif;
+      color: var(--azul);
+      font-size: 1.25rem;
+    }
+
+    .socials {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      font-weight: 900;
+    }
+
+    .socials a:hover,
+    .socials a:focus-visible { color: var(--rojo); }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(28px);
+      transition: opacity .65s ease, transform .65s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: none;
+    }
+
+    @media (max-width: 920px) {
+      .nav-links {
+        position: fixed;
+        inset: 76px 18px auto;
+        display: none;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 22px;
+        border: var(--borde);
+        background: var(--crema);
+        box-shadow: var(--sombra);
+      }
+
+      .nav-links.open { display: flex; }
+      .menu-button { display: block; }
+
+      .hero-grid,
+      .live-layout,
+      .about-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-grid {
+        gap: 50px;
+        padding-top: 52px;
+      }
+
+      .upcoming-wrap {
+        width: min(100%, 560px);
+        margin-inline: auto;
+      }
+
+      .program-grid { grid-template-columns: 1fr; }
+
+      .about-visual {
+        width: min(100%, 620px);
+        margin-inline: auto;
+      }
+    }
+
+    @media (max-width: 660px) {
+      .container { width: min(calc(100% - 24px), var(--max)); }
+      .nav-brand span { display: none; }
+      .hero-grid { padding-bottom: 110px; }
+      .hero-logo { margin-top: -8px; margin-bottom: -20px; }
+      .upcoming-card { min-height: 495px; padding: 23px; }
+      .integilentes-lockup { height: 310px; }
+      .section { padding: 68px 0; }
+
+      .section-heading {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .live-times { grid-template-columns: 1fr; }
+      .merch-stage { min-height: 440px; padding: 32px 18px; }
+      .merch-object { opacity: .4; }
+      .footer-inner {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header class="site-header">
+    <div class="container nav">
+      <a class="nav-brand" href="#inicio" aria-label="Ir al inicio">
+        <img src="assets/gorro.svg" alt="">
+        <span>Recontra<br>Pavos</span>
+      </a>
+
+      <nav class="nav-links" id="navLinks" aria-label="Navegación principal">
+        <a href="#programas">Programas</a>
+        <a href="#en-vivo">Horarios</a>
+        <a href="#merch">Merch</a>
+        <a href="#nosotros">Nosotros</a>
+        <a href="#marcas">Para las marcas</a>
+      </nav>
+
+      <button class="menu-button" id="menuButton" aria-label="Abrir menú" aria-controls="navLinks" aria-expanded="false">☰</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <div class="eyebrow">
+            <span class="eyebrow-dot"></span>
+            CANAL DE STREAMING (CASI SERIO)
+          </div>
+
+          <p class="hero-copy">
+            Conversaciones, juegos, cultura geek y opiniones sin sentido,
+            transmitidas con mucha confianza.
+          </p>
+
+          <p class="hero-note">“BIEN PAVOS” quedaba corto, SOMOS...</p>
+
+          <img class="hero-logo" src="assets/recontra-pavos-logo.png" alt="Recontra Pavos">
+
+          <div class="actions">
+            <a class="button button-red" href="https://www.youtube.com/@RecontraPavos" target="_blank" rel="noopener noreferrer">▶ Ver canal</a>
+            <a class="button button-cream" href="#programas">Conocer programas</a>
+          </div>
+        </div>
+
+        <div class="upcoming-wrap reveal">
+          <img class="decor decor-estallido" src="assets/estallido.svg" alt="">
+          <img class="decor decor-rayo" src="assets/rayo.svg" alt="">
+          <img class="decor decor-espiral" src="assets/espiral.svg" alt="">
+
+          <article class="upcoming-card" aria-label="Próximamente: Integilentes">
+            <div>
+              <span class="program-tag">PRÓXIMAMENTE</span>
+
+              <div class="integilentes-lockup">
+                <img class="integilentes-brain" src="assets/cerebro.png" alt="">
+                <img class="integilentes-text" src="assets/integilentes-texto.png" alt="Integilentes">
+              </div>
+            </div>
+
+            <div>
+              <a class="schedule-link"
+                 href="https://www.youtube.com/watch?v=h77T5kXwvwY&list=PLZHzpYioa_lBN-dB_L0hJIlLtkgaJY1Vt"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                Lun · Mié · Vie — 4:00 p. m.
+              </a>
+              <div class="countdown" id="countdown" aria-live="polite">Calculando el próximo directo…</div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section programs" id="programas">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <p class="kicker">Nuestra programación</p>
+            <h2>Programas con nuestra personalidad.</h2>
+          </div>
+          <p class="scribble">Mira los distintos programas, no seas pavo.</p>
+        </div>
+
+        <div class="program-grid">
+          <article class="program-card integilentes reveal">
+            <span class="program-number">01</span>
+            <div class="program-content">
+              <img class="program-brand" src="assets/integilentes-program-card.png" alt="Integilentes">
+              <p>
+                Magazine de entretenimiento, donde todo puede pasar
+                (Sí, decimos groserías, perdón mamá).
+              </p>
+              <a class="program-tag"
+                 href="https://www.youtube.com/watch?v=h77T5kXwvwY&list=PLZHzpYioa_lBN-dB_L0hJIlLtkgaJY1Vt"
+                 target="_blank"
+                 rel="noopener noreferrer">
+                Ver programa
+              </a>
+            </div>
+          </article>
+
+          <article class="program-card virgeeks reveal">
+            <span class="program-number">02</span>
+            <div class="program-content">
+              <div class="virgeeks-lockup">
+                <h3 class="virgeeks-title">Virgeeks</h3>
+                <div class="soon-sign overlap">PRÓXIMAMENTE</div>
+              </div>
+              <p>
+                Espera, todavía no queremos revelar nada, lee el cartel de abajo
+                por ahora (Sí, es en serio).
+              </p>
+              <span class="program-tag">Próximamente</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="section live-section" id="en-vivo">
+      <div class="container live-layout">
+        <div class="general-time reveal">
+          <span class="program-tag">HORARIO GENERAL</span>
+          <strong>4 PM</strong>
+          <p class="general-days">Lunes · Miércoles · Viernes</p>
+        </div>
+
+        <div class="reveal">
+          <p class="kicker" style="color: var(--azul)">En vivo</p>
+          <h2>Tres días. La misma confianza.</h2>
+
+          <div class="live-times">
+            <div class="live-time"><b>LUNES</b><span>4:00 PM</span></div>
+            <div class="live-time"><b>MIÉRCOLES</b><span>4:00 PM</span></div>
+            <div class="live-time"><b>VIERNES</b><span>4:00 PM</span></div>
+          </div>
+
+          <div class="actions">
+            <a class="button button-red"
+               href="https://www.youtube.com/@RecontraPavos"
+               target="_blank"
+               rel="noopener noreferrer">
+              Ir al canal
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section merch" id="merch">
+      <div class="container">
+        <div class="section-heading reveal">
+          <div>
+            <p class="kicker">Merch oficial</p>
+            <h2>Para llevar lo pavo a todas partes.</h2>
+          </div>
+          <p class="scribble">Todavía no preguntes por tallas.</p>
+        </div>
+
+        <div class="merch-stage reveal">
+          <div class="merch-object one"></div>
+          <div class="merch-object two"></div>
+          <div class="merch-object three"></div>
+          <div class="merch-object four"></div>
+          <img class="decor decor-estallido" src="assets/estallido.svg" alt="" style="left:25px;top:30px;width:105px">
+          <img class="decor decor-rayo" src="assets/rayo.svg" alt="" style="right:34px;bottom:26px;width:80px">
+
+          <div class="merch-coming">
+            <h3>PRÓXIMAMENTE</h3>
+            <p>Gorras, polos, stickers y otras ideas recontra pavas.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section about" id="nosotros">
+      <div class="container about-layout">
+        <div class="about-visual reveal">
+          <img src="assets/recontra-pavos-logo.png" alt="Logo de Recontra Pavos">
+        </div>
+
+        <div class="about-copy reveal">
+          <p class="kicker" style="color: var(--crema)">Quiénes somos</p>
+          <h2>Un canal hecho para pasarla bien juntos.</h2>
+
+          <p>
+            Recontra Pavos es un canal de streaming juvenil, espontáneo y cercano.
+            La marca combina humor, cultura digital y conversación sin pretender
+            saberlo todo.
+          </p>
+
+          <div class="about-values">
+            <span>Espontáneo</span>
+            <span>Divertido</span>
+            <span>Cercano</span>
+            <span>Casi serio</span>
+          </div>
+
+          <p>
+            El streaming tiene que llegar a todos, incluidos al público más
+            importante, los jóvenes.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section community" id="comunidad">
+      <div class="container">
+        <div class="community-box reveal">
+          <img class="decor decor-estallido" src="assets/estallido.svg" alt="" style="left:20px;top:20px;width:92px">
+          <img class="decor decor-rayo" src="assets/rayo.svg" alt="" style="right:22px;bottom:18px;width:72px">
+
+          <p class="kicker">Comunidad Recontra Pavos</p>
+          <h2>Encuéntranos en todas partes.</h2>
+          <p>
+            Sigue las transmisiones, mira los clips y entra a la comunidad para
+            no perderte lo que viene.
+          </p>
+
+          <div class="actions">
+            <a class="button button-red" href="https://www.youtube.com/@RecontraPavos" target="_blank" rel="noopener noreferrer">YouTube</a>
+            <a class="button button-blue" href="https://www.instagram.com/recontrapavos/" target="_blank" rel="noopener noreferrer">Instagram</a>
+            <a class="button button-cream" href="https://www.tiktok.com/@recontrapavospe" target="_blank" rel="noopener noreferrer">TikTok</a>
+            <a class="button button-black" href="https://discord.com/invite/5kSB3sjsXY" target="_blank" rel="noopener noreferrer">Discord</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section brands" id="marcas">
+      <div class="container">
+        <div class="sponsor-box reveal">
+          <span class="sponsor-label">Para las marcas</span>
+          <h2>¿Quieres patrocinar Recontra Pavos?</h2>
+          <p>
+            Si eres una empresa que busca tener a su marca presente en el canal,
+            contáctanos por
+            <strong>recontrapavasosenterprises@gmail.com</strong>.
+          </p>
+
+          <div class="actions" style="justify-content:center">
+            <a class="button button-red email-link"
+               href="mailto:recontrapavasosenterprises@gmail.com?subject=Patrocinio%20para%20Recontra%20Pavos">
+              Contactar por correo
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <div>
+        <div class="footer-title">Recontra Pavos</div>
+        <small>Canal de streaming (casi serio).</small>
+      </div>
+
+      <div class="socials">
+        <a href="https://www.youtube.com/@RecontraPavos" target="_blank" rel="noopener noreferrer">YouTube</a>
+        <a href="https://www.instagram.com/recontrapavos/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="https://www.tiktok.com/@recontrapavospe" target="_blank" rel="noopener noreferrer">TikTok</a>
+        <a href="https://discord.com/invite/5kSB3sjsXY" target="_blank" rel="noopener noreferrer">Discord</a>
+      </div>
+
+      <small>© <span id="year"></span> Recontra Pavos</small>
+    </div>
+  </footer>
+
+  <script>
+    const menuButton = document.getElementById("menuButton");
+    const navLinks = document.getElementById("navLinks");
+
+    menuButton.addEventListener("click", () => {
+      const isOpen = navLinks.classList.toggle("open");
+      menuButton.setAttribute("aria-expanded", String(isOpen));
+      menuButton.textContent = isOpen ? "✕" : "☰";
+    });
+
+    navLinks.querySelectorAll("a").forEach(link => {
+      link.addEventListener("click", () => {
+        navLinks.classList.remove("open");
+        menuButton.setAttribute("aria-expanded", "false");
+        menuButton.textContent = "☰";
+      });
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    const revealObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add("visible");
+          revealObserver.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll(".reveal").forEach(element => revealObserver.observe(element));
+
+    /*
+      Horario oficial en Lima:
+      lunes, miércoles y viernes a las 4:00 p. m.
+      Se considera "en vivo" desde las 4:00 p. m. hasta antes de las 7:00 p. m.
+      Perú utiliza UTC-5 durante todo el año.
+    */
+    function streamStatus() {
+      const countdown = document.getElementById("countdown");
+      const now = new Date();
+      const limaOffsetMs = 5 * 60 * 60 * 1000;
+      const limaNow = new Date(now.getTime() - limaOffsetMs);
+
+      const year = limaNow.getUTCFullYear();
+      const month = limaNow.getUTCMonth();
+      const date = limaNow.getUTCDate();
+      const day = limaNow.getUTCDay();
+      const hour = limaNow.getUTCHours();
+      const minute = limaNow.getUTCMinutes();
+      const second = limaNow.getUTCSeconds();
+
+      const streamDays = [1, 3, 5];
+
+      // Si hoy hay programa y en Lima son entre 4:00 p. m. y antes de 7:00 p. m.
+      if (streamDays.includes(day) && hour >= 16 && hour < 19) {
+        countdown.innerHTML = '<span class="live-now">● ESTAMOS EN VIVO — ENTRA AL CANAL</span>';
+        return;
+      }
+
+      let nextTarget = null;
+
+      for (let addDays = 0; addDays <= 7; addDays++) {
+        const candidateLocal = new Date(Date.UTC(year, month, date + addDays, 16, 0, 0));
+        const candidateDay = candidateLocal.getUTCDay();
+        const candidateRealUtc = new Date(candidateLocal.getTime() + limaOffsetMs);
+
+        if (streamDays.includes(candidateDay) && candidateRealUtc.getTime() > now.getTime()) {
+          nextTarget = candidateRealUtc;
+          break;
+        }
+      }
+
+      if (!nextTarget) {
+        countdown.textContent = "Próximo directo: muy pronto.";
+        return;
+      }
+
+      const difference = nextTarget.getTime() - now.getTime();
+      const days = Math.floor(difference / 86400000);
+      const hours = Math.floor((difference % 86400000) / 3600000);
+      const minutes = Math.floor((difference % 3600000) / 60000);
+      const seconds = Math.floor((difference % 60000) / 1000);
+
+      const weekday = new Intl.DateTimeFormat("es-PE", {
+        weekday: "long",
+        timeZone: "America/Lima"
+      }).format(nextTarget);
+
+      const dateText = new Intl.DateTimeFormat("es-PE", {
+        day: "numeric",
+        month: "long",
+        timeZone: "America/Lima"
+      }).format(nextTarget);
+
+      const parts = [];
+      if (days > 0) parts.push(`${days} d`);
+      if (hours > 0 || days > 0) parts.push(`${hours} h`);
+      parts.push(`${minutes} min`);
+      parts.push(`${seconds} s`);
+
+      countdown.textContent =
+        `Próximo directo: ${weekday} ${dateText}, 4:00 p. m. · Faltan ${parts.join(" ")}`;
+    }
+
+    streamStatus();
+    setInterval(streamStatus, 1000);
+  </script>
+</body>
+</html>
