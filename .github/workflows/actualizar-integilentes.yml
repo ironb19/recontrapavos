@@ -8,13 +8,19 @@ permissions:
 jobs:
   actualizar:
     runs-on: ubuntu-latest
+    env:
+      YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
     steps:
+      - name: Comprobar configuración de YouTube
+        if: ${{ env.YOUTUBE_API_KEY == '' }}
+        run: echo "Pendiente de configurar el secreto YOUTUBE_API_KEY en Settings > Secrets and variables > Actions"
       - uses: actions/checkout@v4
-      - name: Descargar el último episodio de la playlist
+        if: ${{ env.YOUTUBE_API_KEY != '' }}
+      - name: Consultar último episodio de la playlist
+        if: ${{ env.YOUTUBE_API_KEY != '' }}
         run: python3 scripts/actualizar_episodio.py
-        env:
-          YOUTUBE_API_KEY: ${{ secrets.YOUTUBE_API_KEY }}
       - name: Guardar cambios si aparece un episodio nuevo
+        if: ${{ env.YOUTUBE_API_KEY != '' }}
         run: |
           if git diff --quiet -- data/ultimo-episodio.json; then
             echo "Sin cambios"
