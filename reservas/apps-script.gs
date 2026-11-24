@@ -92,6 +92,10 @@ function doGet(e) {
 function texto_(obj, clave, max) {
   return String(obj[clave] || "").trim().slice(0,max);
 }
+function seguroHoja_(texto) {
+  const valor = String(texto);
+  return /^[=+\-@]/.test(valor) ? "'" + valor : valor;
+}
 function reserva_(p) {
   if (texto_(p,"website",50)) throw new Error("Solicitud inválida.");
   const id = texto_(p,"evento_id",100);
@@ -113,7 +117,7 @@ function reserva_(p) {
     if (Date.now() >= new Date(ev.fecha).getTime() - CORTE_HORAS*3600000) throw new Error("Las solicitudes para esta función están cerradas.");
     const reservas = filas_(RESERVAS);
     if (reservas.some(r=>String(r[1])===id &&
-      (String(r[4]).trim().toLowerCase()===correo || String(r[5]).replace(/[\s()-]/g,"")===telefono)
+      (String(r[4]).trim().toLowerCase()===correo || String(r[5]).replace(/^'/,"").replace(/[\s()-]/g,"")===telefono)
       && ["PENDIENTE","CONFIRMADA"].includes(status_(r[7])))) {
       throw new Error("Ya existe una solicitud vigente con esos datos para esta función.");
     }
@@ -121,7 +125,7 @@ function reserva_(p) {
     if (ocupados >= ev.cupos) throw new Error("Ya no quedan entradas disponibles.");
     const codigo = "RP-" + Utilities.getUuid().slice(0,8).toUpperCase();
     const ahora = new Date();
-    hoja_(RESERVAS).appendRow([codigo,id,nombres,apellidos,correo,telefono,"SI","PENDIENTE",ahora,ahora]);
+    hoja_(RESERVAS).appendRow([codigo,id,seguroHoja_(nombres),seguroHoja_(apellidos),correo,seguroHoja_(telefono),"SI","PENDIENTE",ahora,ahora]);
     return {codigo,correo,telefono,nombres,apellidos,evento:ev};
   } finally { lock.releaseLock(); }
 }
