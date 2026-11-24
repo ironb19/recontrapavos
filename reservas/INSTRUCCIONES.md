@@ -18,18 +18,18 @@
 
 Se necesita acceso al correo de administración en una **cuenta de Google**; no hay que compartir contraseñas.
 
-1. En esa cuenta, crea una hoja de cálculo de Google Sheets llamada \`Recontra Pavos - Entradas\`. Mantén su acceso **Restringido**; no la compartas con asistentes.
-2. En la hoja ve a **Extensiones → Apps Script**, copia el contenido de \`reservas/apps-script.gs\` en el editor y guarda.
-3. Ejecuta la función \`setup\` desde el editor y acepta los permisos de Google. Se crearán las hojas privadas **Funciones** y **Reservas**, así como la tarea horaria que libera pendientes.
-4. En el editor abre **Configuración del proyecto → Propiedades del script → Añadir propiedad**, usa la clave \`ADMIN_EMAIL\` y escribe el correo del organizador. **No pongas ese correo en el HTML ni en el repositorio.**
+1. En esa cuenta, crea una hoja de cálculo de Google Sheets llamada `Recontra Pavos - Entradas`. Mantén su acceso **Restringido**; no la compartas con asistentes.
+2. En la hoja ve a **Extensiones → Apps Script**, copia el contenido de `reservas/apps-script.gs` en el editor y guarda.
+3. Ejecuta la función `setup` desde el editor y acepta los permisos de Google. Se crearán las hojas privadas **Funciones** y **Reservas**, así como la tarea horaria que libera pendientes.
+4. En el editor abre **Configuración del proyecto → Propiedades del script → Añadir propiedad**, usa la clave `ADMIN_EMAIL` y escribe el correo del organizador. **No pongas ese correo en el HTML ni en el repositorio.**
 5. Regresa a la pestaña **Funciones** e introduce, en una nueva fila, columnas:
-   - \`evento_id\`: por ejemplo \`integilentes-2026-11-27\`.
-   - \`fecha_iso\`: fecha y hora con zona horaria peruana, en **texto sin formato**: \`2026-11-27T16:00:00-05:00\` (solo ejemplo; confirma siempre la fecha y la hora reales).
-   - \`titulo\`: \`Integilentes — Función de viernes\`.
-   - \`cupos\`: \`3\`.
-   - \`activo\`: \`SI\`.
-6. En Apps Script: **Implementar → Nueva implementación → Aplicación web**; ejecución **como tú** y acceso **Cualquier persona**. Autoriza. Copia la URL que termina en \`/exec\`.
-7. En GitHub, edita \`data/entradas-config.json\` e introduce esa URL en \`apiUrl\`, respetando las comillas. La URL es pública, **no** es una contraseña. No compartas nunca tu sesión Google ni el enlace a la hoja de cálculo.
+   - `evento_id`: por ejemplo `integilentes-2026-11-27`.
+   - `fecha_iso`: fecha y hora con zona horaria peruana, en **texto sin formato**: `2026-11-27T16:00:00-05:00` (solo ejemplo; confirma siempre la fecha y la hora reales).
+   - `titulo`: `Integilentes — Función de viernes`.
+   - `cupos`: `3`.
+   - `activo`: `SI`.
+6. En Apps Script: **Implementar → Nueva implementación → Aplicación web**; ejecución **como tú** y acceso **Cualquier persona**. Autoriza. Copia la URL que termina en `/exec`.
+7. En GitHub, edita `data/entradas-config.json` e introduce esa URL en `apiUrl`, respetando las comillas. La URL es pública, **no** es una contraseña. No compartas nunca tu sesión Google ni el enlace a la hoja de cálculo.
 8. Prueba con una función futura, simulando **tres solicitudes** con distintos teléfonos/correos y verifica que:
    - cada solicitud aparece como **PENDIENTE**;
    - los cupos disminuyen hasta cero;
@@ -38,7 +38,7 @@ Se necesita acceso al correo de administración en una **cuenta de Google**; no 
    - al editar el estado a **CANCELADA** se devuelve el cupo;
    - al editar a **CONFIRMADA**, la solicitud sigue ocupando un cupo;
    - las pendientes vencen al llegar al corte de 72 horas.
-9. Solo después de probar, publica la rama en \`main\` para que la sección esté disponible en \`www.recontrapavos.com\`.
+9. Solo después de probar, publica la rama en `main` para que la sección esté disponible en `www.recontrapavos.com`.
 
 ## Administración del día a día
 
@@ -47,7 +47,7 @@ Se necesita acceso al correo de administración en una **cuenta de Google**; no 
 - **CANCELADA**: cancelada manualmente, cupo devuelto.
 - **LIBERADA**: no se confirmó antes del corte de 72 horas; cupo devuelto.
 
-**No cambies** manualmente las columnas \`codigo\`, \`evento_id\` ni \`solicitada_en\`; edita solo \`estado\` para confirmar o cancelar.
+**No cambies** manualmente las columnas `codigo`, `evento_id` ni `solicitada_en`; edita solo `estado` para confirmar o cancelar.
 
 ## Privacidad y consideraciones antes de abrir al público
 
@@ -59,7 +59,7 @@ Se necesita acceso al correo de administración en una **cuenta de Google**; no 
 - No incluyas en la web la dirección exacta del estudio sin decidir antes si se enviará solo a asistentes confirmados.
 
 ## Archivos
-- \`index.html\`: sección de entradas, estilo del sitio y enlace de navegación.
-- \`tickets.js\`: consulta pública de cupos y formulario de solicitudes.
-- \`data/entradas-config.json\`: URL del backend (vacía hasta que se active).
-- \`reservas/apps-script.gs\`: servicio de cupos, notificaciones y vencimientos en Apps Script.
+- `index.html`: sección de entradas, estilo del sitio y enlace de navegación.
+- `tickets.js`: consulta pública de cupos y formulario de solicitudes.
+- `data/entradas-config.json`: URL del backend (vacía hasta que se active).
+- `reservas/apps-script.gs`: servicio de cupos, notificaciones y vencimientos en Apps Script.
